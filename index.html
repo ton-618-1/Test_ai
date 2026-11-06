@@ -1,1 +1,208 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI Assistant</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.container {
+    width: 100%;
+    max-width: 750px;
+    height: 85vh;
+    background: #1e293b;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 40px #0005;
+}
+
+header {
+    padding: 22px;
+    text-align: center;
+    background: #334155;
+    border-bottom: 1px solid #475569;
+}
+
+header h1 {
+    font-size: 25px;
+    color: #38bdf8;
+}
+
+header p {
+    color: #cbd5e1;
+    margin-top: 7px;
+    font-size: 13px;
+}
+
+#chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    padding: 13px 16px;
+    border-radius: 14px;
+    max-width: 85%;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.user {
+    background: #0284c7;
+    align-self: flex-end;
+}
+
+.bot {
+    background: #334155;
+    align-self: flex-start;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background: #334155;
+}
+
+input {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: #0f172a;
+    color: white;
+    font-size: 15px;
+    min-width: 0;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #0ea5e9;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0284c7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>✨ MY AI ASSISTANT</h1>
+        <p>Trợ lý AI của riêng bạn</p>
+    </header>
+
+    <div id="chat">
+        <div class="message bot">
+            Xin chào! 👋
+            Mình là AI Assistant.
+            Bạn muốn hỏi điều gì?
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input
+            id="question"
+            type="text"
+            placeholder="Nhập câu hỏi của bạn..."
+        >
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("question");
+
+function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = text;
+    chat.appendChild(message);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+    const question = input.value.trim();
+
+    if (question === "") return;
+
+    addMessage(question, "user");
+    input.value = "";
+
+    setTimeout(() => {
+        let answer = "Mình đã nhận được câu hỏi của bạn!";
+
+        const q = question.toLowerCase();
+
+        if (q.includes("xin chào") || q.includes("hello")) {
+            answer = "Xin chào! Rất vui được trò chuyện với bạn 😊";
+        }
+        else if (q.includes("tên")) {
+            answer = "Mình là My AI Assistant!";
+        }
+        else if (q.includes("bạn khỏe")) {
+            answer = "Mình hoạt động bình thường! Cảm ơn bạn nhé.";
+        }
+        else if (q.includes("html")) {
+            answer = "HTML là ngôn ngữ đánh dấu dùng để xây dựng cấu trúc website.";
+        }
+        else if (q.includes("javascript")) {
+            answer = "JavaScript giúp website có thể tương tác và xử lý các hành động.";
+        }
+        else if (q.includes("cảm ơn")) {
+            answer = "Không có gì! Rất vui được giúp bạn ❤️";
+        }
+        else {
+            answer = "Mình chưa có câu trả lời cho câu hỏi này. Đây là phiên bản AI demo.";
+        }
+
+        addMessage(answer, "bot");
+    }, 500);
+}
+
+input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+</script>
+
+</body>
+</html>
+
